@@ -36,16 +36,6 @@ info?.baseUrl    // http://debug.InfoKit.local
 info?.staticUrl  // http://debug.static.InfoKit.local
 ```
 
-### Build Configurations
- If **no resource or bundle is specified** in the initializer of the `Plist` class, then `InfoKit` will default to the Main Bundle's Info.plist file defined in the Project's Build Settings.
-
-```swift
-init(_ resource: String? = nil, in bundle: Bundle = Bundle.main)
-```
-
- Because of this, you can provide multiple Info.plist files for different configurations and still get the desired results. See the provided iOS Example project in action.
-
-
 ### Custom .plist
 For convenience, `InfoKit` will also provide access to custom .plist files. Let's say you included a **ProductIDs.plist** file. Start by defining the struct with it's respective properties.
 
@@ -75,6 +65,18 @@ InfoKit will default to the [Main Bundle](https://developer.apple.com/documentat
 ```swift
 Plist<Products>("ProductIDs", in: bundle)
 ```
+
+### Build Configurations
+If **no resource or bundle is specified** in the initializer of the `Plist` class, like so:
+
+```swift
+Plist<Info>()
+```
+
+...then, `InfoKit` will default to the Main Bundle's Info.plist file defined in the Project's Build Settings.
+
+Because of this, you can provide **multiple Info.plist** files for **different configurations** and still get the desired results. 
+See the iOS Example project in action by choosing between the **debug**, **staging** and **release** configurations.
 
 ## License
 

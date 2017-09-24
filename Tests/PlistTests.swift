@@ -25,19 +25,7 @@
 import XCTest
 @testable import InfoKit
 
-class ConfigTests: XCTestCase {
-    
-    var config: Config!
-
-    override func setUp() {
-        super.setUp()
-        self.config = Config()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-        self.config = nil
-    }
+class PlistTests: XCTestCase {
     
     func testInfoPlist() {
         
@@ -48,11 +36,11 @@ class ConfigTests: XCTestCase {
         }
         
         // Given
-        let bundle = Bundle(for: ConfigTests.self)
+        let bundle = Bundle(for: PlistTests.self)
         let plist = Plist<Info>(in: bundle)
         
         // When
-        let info = config.get(plist)
+        let info = plist.decode()
         
         // Then
         #if DEBUG
@@ -71,11 +59,11 @@ class ConfigTests: XCTestCase {
         }
         
         // Given
-        let bundle = Bundle(for: ConfigTests.self)
+        let bundle = Bundle(for: PlistTests.self)
         let plist = Plist<Products>("Products", in: bundle)
         
         // When
-        let products = config.get(plist)
+        let products = plist.decode()
 
         // Then
         XCTAssertEqual(products?.foo, "com.InfoKit.foo")

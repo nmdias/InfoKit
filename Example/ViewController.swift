@@ -20,8 +20,6 @@ struct Products: Codable {
 }
 
 class ViewController: UIViewController {
-
-    private let config = Config()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +35,7 @@ class ViewController: UIViewController {
     /// Prints the App's Info.plist of the current build configuration
     private func printBuildConfigurationUrls() {
         let plist = Plist<Info>()
-        let info = config.get(plist)!
+        let info = plist.decode()!
         
         print("\nurls")
         print(info.baseUrl)
@@ -51,7 +49,7 @@ class ViewController: UIViewController {
     /// Make sure to set it's `Target Membership`
     private func printProducts() {
         let plist = Plist<Products>("Products")
-        let products = config.get(plist)!
+        let products = plist.decode()!
         
         print("\nproducts")
         print(products.foo)

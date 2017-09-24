@@ -43,32 +43,20 @@ public class Plist<T: Codable> {
         self.bundle = bundle
     }
     
-}
-
-/// Provides strongly typed values associated with bundled
-/// and user provided Info.plist and *.plist.
-public class Config {
-    
-    /// Shared instance of `Config`, used for ad-hoc access to the default
-    /// bundled and user provided .plist files.
-    public static let shared = Config()
-    
-    public init() {}
-    
     /// Returns the value associated with the specified plist. If the `Plist`'s
     /// resource name is not specified it will default to the default bundled
     /// Info.plist file.
     ///
     /// - Parameter plist: The Plist provider
     /// - Returns: A instance of `T` or nil if the resource was not found or failed to decode.
-    public func get<T>(_ plist: Plist<T>) -> T? {
-        guard let resource = plist.resource else {
-            return getFromBundledInfo(plist)
+    public func decode() -> T? {
+        guard let resource = self.resource else {
+            return getFromBundledInfo()
         }
         
-        guard let path = plist.bundle.path(forResource: resource, ofType: "plist", inDirectory: nil) else {
+        guard let path = self.bundle.path(forResource: resource, ofType: "plist", inDirectory: nil) else {
             #if DEBUG
-                print("Resource: \(resource) not found in bundle: \(plist.bundle)")
+                print("Resource: \(resource) not found in bundle: \(self.bundle)")
             #endif
             return nil
         }
@@ -93,10 +81,10 @@ public class Config {
     ///
     /// - Parameter plist: The Plist provider
     /// - Returns: A instance of `T` or nil if the resource was not found or failed to decode.
-    private func getFromBundledInfo<T>(_ plist: Plist<T>) -> T? {
-        guard let infoDictionary = plist.bundle.infoDictionary else {
+    private func getFromBundledInfo() -> T? {
+        guard let infoDictionary = self.bundle.infoDictionary else {
             #if DEBUG
-                print("infoDictionary for bundle: \(plist.bundle) is nil.")
+                print("infoDictionary for bundle: \(self.bundle) is nil.")
             #endif
             return nil
         }

@@ -28,11 +28,8 @@ And read the Info.plist into the `Info` struct:
 // Define a Plist
 let plist = Plist<Info>()
 
-// Get an instance of Config
-let config = Config() // or Config.shared
-
-// Read it
-let info = config.get(plist)
+// Decode it
+let info = plist.decode()
 
 // Then access it's properties
 info?.baseUrl    // http://debug.InfoKit.local
@@ -40,13 +37,13 @@ info?.staticUrl  // http://debug.static.InfoKit.local
 ```
 
 ### Build Configurations
- If **no resource or bundle is specified** in the initializer of the `Plist` class, then `InfoKit` will default to the Main Bundle's default Info.plist file, as defined in the Project's Build Settings.
+ If **no resource or bundle is specified** in the initializer of the `Plist` class, then `InfoKit` will default to the Main Bundle's Info.plist file defined in the Project's Build Settings.
 
 ```swift
 init(_ resource: String? = nil, in bundle: Bundle = Bundle.main)
 ```
 
- Because of this, you can provide multiple Info.plist files for different configurations and still get the desired results. See the provided iOS Example project to watch it in action.
+ Because of this, you can provide multiple Info.plist files for different configurations and still get the desired results. See the provided iOS Example project in action.
 
 
 ### Custom .plist
@@ -63,10 +60,10 @@ Define a `Plist`, and this time, **specify the resource name**. e.g. `ProductIDs
 
 ```swift
 let plist = Plist<Products>("ProductIDs") // Reads `ProductIDs.plist`
-let products = config.get(plist)!
+let products = plist.decode()
 
-products.foo // com.InfoKit.foo
-products.bar // com.InfoKit.bar
+products?.foo // com.InfoKit.foo
+products?.bar // com.InfoKit.bar
 
 ```
 

@@ -74,8 +74,8 @@ Plist<Info>()
 
 `InfoKit` 将会默认使用Main Bundle中的Info.plist文件来配置构建.
 
-因为该特征, 你可以使用**多个Info.plist**文件来进行**不同的配置**仍然有预期的结果.
-在example中, 你可以通过在配置选项**debug**, **staging**和**release**之间切换看到该结果.
+因为该特征, 你可以使用**多个Info.plist**文件来进行**不同的配置**仍然有预期的结果.  
+在example中, 你可以通过在配置选项**debug**, **staging**和**release**之间切换来看到该结果.
 
 ### 开源协议
 

@@ -77,6 +77,35 @@ public class Plist<T: Codable> {
         
     }
     
+    /// Encode the data into plist file
+    ///
+    /// - Parameter data: class to encode
+    /// - Returns: whether encode and write to tht plist file success
+    public func encode(data: T) -> Bool {
+        guard let resource = self.resource else {
+            return false
+        }
+        
+        guard let path = self.bundle.path(forResource: resource, ofType: "plist", inDirectory: nil) else {
+            #if DEBUG
+            print("Resource: \(resource) not found in bundle: \(self.bundle)")
+            #endif
+            return false
+        }
+        
+        do {
+            let encoder = PropertyListEncoder()
+            let data = try encoder.encode(data)
+            try data.write(to: URL(fileURLWithPath: path))
+            return true
+        } catch {
+            #if DEBUG
+            print("Error Encoding \(error)")
+            #endif
+            return false
+        }
+    }
+    
     /// Returns the value associated with the default bundled Info.plist file.
     ///
     /// - Parameter plist: The Plist provider

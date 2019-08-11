@@ -71,4 +71,24 @@ class PlistTests: XCTestCase {
 
     }
     
+    func testEncodeUserProvidedPlist() {
+        
+        // Mocks
+        struct Products: Codable {
+            let foo: String
+            let bar: String
+        }
+        
+        // Given
+        let bundle = Bundle(for: PlistTests.self)
+        let plist = Plist<Products>("Products", in: bundle)
+        
+        let newProduct = Products(foo: "new foo", bar: "new foo bar")
+        
+        let result = plist.encode(data: newProduct)
+        
+        XCTAssertEqual(result, true)
+        
+    }
+    
 }
